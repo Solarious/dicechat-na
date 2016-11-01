@@ -11,6 +11,20 @@ var dburl = process.env.MONGODB_URI;
 
 mongoose.connect(dburl);
 
+// redirect to https on production
+var https_redirect = function(req, res, next) {
+	if (req.headers['x-forwarded-proto'] !== 'https') {
+		console.log('redirection to https occuring');
+		return res.redirect('https://' + req.headers.host + req.url);
+	} else {
+		return next();
+	}
+};
+if (process.env.NODE_ENV === 'production') {
+	app.use(https_redirect);
+	console.log('using https redirect');
+}
+
 app.use(bodyParser.json());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 app.use(bodyParser.urlencoded({ extended: true }));
