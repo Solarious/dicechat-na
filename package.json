@@ -1,0 +1,22 @@
+{
+  "name": "dicechat",
+  "version": "1.0.0",
+  "description": "MEAN Stack website with realtime chat and dice rolling",
+  "engines": {
+    "node": "4.2.6"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "postinstall": "bower install"
+  },
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.15.2",
+    "bower": "^1.7.9",
+    "express": "^4.14.0",
+    "method-override": "^2.3.6",
+    "mongoose": "^4.6.5",
+    "morgan": "^1.7.0",
+    "socket.io": "^1.5.1"
+  }
+}

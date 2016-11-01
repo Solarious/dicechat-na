@@ -1,0 +1,32 @@
+<div class="col-sm-3">
+	<div class="form-group">
+		<label for="crn">Chatroom name</label>
+		<input type="text" id="crn" class="form-control" ng-model="newChatroomName"/>
+	</div>
+	<div class="form-group">
+		<label for="crp">Password</label>
+		<input type="password" id="crp" class="form-control" ng-model="newChatroomPassword"/>
+	</div>
+	<button type="button" class="btn btn-primary" ng-click="createChatroom()">
+		Create Chatroom
+	</button>
+</div>
+
+
+<div class="col-sm-9">
+	<div ng-class="'alert alert-' + (alert.type || 'warning')"
+	ng-repeat="alert in alerts" close="closeAlert($index)">
+		<a href="#" class="close" data-dismiss="alert">&times;</a>
+		<strong>Alert!</strong>
+		{{alert.msg}}
+	</div>
+
+	<ul class="list-group">
+		<li class="list-group-item">
+			<h2>Chatrooms</h2>
+		</li>
+		<li class="list-group-item" ng-repeat="chatroom in chatrooms">
+			<a ng-href="/{{chatroom.name}}">{{chatroom.name}}</a>
+		</li>
+	</ul>
+</div>

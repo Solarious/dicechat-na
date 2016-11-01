@@ -1,0 +1,34 @@
+<div class="col-sm-3">
+	<div class="form-group">
+		<label for="nn">Nickname</label>
+		<input type="text" class="form-control" id="nn" ng-model="nickname"
+		placeholder="Enter nickname"/>
+		<small class="form-text text-muted">The name you want your posts to show</small>
+	</div>
+	<div class="form-group">
+		<label for="pwd">Password</label>
+		<input type="password" class="form-control" id="usr" ng-model="password"
+		placeholder="Password"/>
+		<small class="form-text text-muted">The password for the chatroom (if it has one)</small>
+	</div>
+	<button type="button" class="btn btn-primary" ng-click="auth()">Authenticate</button>
+</div>
+
+<div class="col-sm-9">
+	<div class="messages" scroll-glue>
+		<ul class="list-group">
+			<li class="list-group-item" ng-repeat="msg in msgs">
+				{{msg.text}}
+			</li>
+		</ul>
+	</div>
+
+
+	<div class="form-group">
+		<label for "msg">Message</label>
+		<input type="text" class="form-control" id="usr" ng-model="msgText"/>
+	</div>
+	<button type="button" class="btn btn-primary" ng-click="sendMsg()">
+		Send Message
+	</button>
+</div>
