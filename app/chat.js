@@ -1,5 +1,6 @@
 var io = require('socket.io');
 var Chatroom = require('./models/chatroom');
+var random = require('./random');
 
 module.exports = function(http) {
 	var io = require('socket.io')(http);
@@ -70,6 +71,19 @@ module.exports = function(http) {
 				send(socket.id, 'client-text',
 				socketInfo[socket.id].nickname + ': ' + msg);
 			}
+		});
+
+		socket.on('server-dice', function(data) {
+			if (!isAuthorized(socket.id)) {
+				socket.emit('client-text', 'You are not authorized to send messages');
+			}
+			random.getDice(data, function(err, results) {
+				if (err) {
+					socket.emit('client-text', 'Error rolling dice');
+				} else {
+					send(socket.id, 'client-dice', results);
+				}
+			});
 		});
 	});
 };
