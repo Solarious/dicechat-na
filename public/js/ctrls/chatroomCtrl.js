@@ -1,11 +1,16 @@
 var app = angular.module('ChatroomCtrl', []);
-app.controller('ChatroomController', ['$scope', function($scope) {
+app.controller('ChatroomController', ['$scope', 'Messages',
+function($scope, Messages) {
 	$scope.connect = function() {
 		$scope.socket = io();
 		$scope.addMsg('Connected');
 
 		$scope.socket.on('client-text', function(text) {
 			$scope.addMsg(text);
+		});
+
+		$scope.socket.on('client-dice', function(data) {
+			$scope.addDiceMsg(data);
 		});
 	};
 
@@ -26,9 +31,20 @@ app.controller('ChatroomController', ['$scope', function($scope) {
 	$scope.addMsg = function(text) {
 		$scope.$evalAsync(function() {
 			$scope.msgs.push({
+				type: 'text',
 				text: text
 			});
 		});
+	};
+
+	$scope.addDiceMsg = function(diceData) {
+		$scope.$evalAsync(function() {
+			$scope.msgs.push(Messages.diceToMsg(diceData));
+		});
+	};
+
+	$scope.sendDice = function() {
+		$scope.socket.emit('server-dice', $scope.dice);
 	};
 
 	$scope.$on('$locationChangeStart', function(event) {

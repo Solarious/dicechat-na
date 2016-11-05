@@ -1,0 +1,11 @@
+<div ng-if="msg.type==='text'">
+	{{msg.text}}
+</div>
+<div ng-if="msg.type==='dice'">
+	<div ng-repeat="dice in msg.dice">
+		<img ng-src="{{dice.src}}" width="32" height="32" class="pull-left"/>
+	</div>
+	<div ng-repeat="result in msg.results">
+		<img ng-src="{{result.src}}" width="32" height="32" class="pull-left"/>
+	</div>
+</div>

@@ -17,18 +17,63 @@
 <div class="col-sm-9">
 	<div class="messages" scroll-glue>
 		<ul class="list-group">
-			<li class="list-group-item" ng-repeat="msg in msgs">
-				{{msg.text}}
+			<li class="list-group-item overflow-hidden" ng-repeat="msg in msgs">
+				<message></message>
 			</li>
 		</ul>
 	</div>
 
-
-	<div class="form-group">
-		<label for "msg">Message</label>
-		<input type="text" class="form-control" id="usr" ng-model="msgText"/>
-	</div>
-	<button type="button" class="btn btn-primary" ng-click="sendMsg()">
-		Send Message
-	</button>
+	<form ng-submit="sendMsg()">
+		<div class="form-group">
+			<label for="msg">Message</label>
+			<input type="text" class="form-control" id="usr"
+			autocomplete="off" ng-model="msgText"/>
+		</div>
+		<div class="col-sm-4">
+			<button type="submit" class="btn btn-primary">
+				Send Message
+			</button>
+			<button type="button" class="btn btn-primary" ng-click="sendDice()">
+				Roll the Dice
+			</button>
+		</div>
+		<div class="col-sm-8">
+			<div class="pull-left">
+				<img src="https://s3-ap-southeast-2.amazonaws.com/dicechatassets/boost_dice.png"
+				height="64" width="64" alt="boost dice"/>
+				<input type="number" min="0" ng-model="dice.boost"/>
+			</div>
+			<div class="pull-left">
+				<img src="https://s3-ap-southeast-2.amazonaws.com/dicechatassets/ability_dice.png"
+				height="64" width="64" alt="boost dice"/>
+				<input type="number" min="0" ng-model="dice.ability"/>
+			</div>
+			<div class="pull-left">
+				<img src="https://s3-ap-southeast-2.amazonaws.com/dicechatassets/proficiency_dice.png"
+				height="64" width="64" alt="boost dice"/>
+				<input type="number" min="0" ng-model="dice.proficiency"/>
+			</div>
+			<div class="pull-left">
+				<img src="https://s3-ap-southeast-2.amazonaws.com/dicechatassets/setback_dice.png"
+				height="64" width="64" alt="boost dice"/>
+				<input type="number" min="0" ng-model="dice.setback"/>
+			</div>
+			<div class="pull-left">
+				<img src="https://s3-ap-southeast-2.amazonaws.com/dicechatassets/difficulty_dice.png"
+				height="64" width="64" alt="boost dice">
+				<input type="number" min="0"/ ng-model="dice.difficulty"/>
+			</div>
+			<div class="pull-left">
+				<img src="https://s3-ap-southeast-2.amazonaws.com/dicechatassets/challenge_dice.png"
+				height="64" width="64" alt="boost dice"/>
+				<input type="number" min="0" ng-model="dice.challenge"/>
+			</div>
+			<div class="pull-left">
+				<img src="https://s3-ap-southeast-2.amazonaws.com/dicechatassets/force_dice.png"
+				height="64" width="64" alt="boost dice"/>
+				<input type="number" min="0" ng-model="dice.force"/>
+			</div>
+		</div>
+	</form>
+	
 </div>

@@ -60,30 +60,32 @@ module.exports = function(http) {
 		});
 
 		socket.on('server-text', function(msg) {
-			console.log('Message:')
-			console.log('\tmessage: ' + msg);
-			console.log('\tsocket id: ' + socket.id);
-			if (isAuthorized(socket.id)) {
-				console.log('sending:');
-				console.log('\tid: ' + socket.id);
-				console.log('\tnickname: ' + socketInfo[socket.id].nickname);
-				console.log('\tmsg: ' + msg);
+			if (!isAuthorized(socket.id)) {
+				socket.emit('client-text',
+				'You are not authorized to send messages. Please authenticate');
+			} else {
 				send(socket.id, 'client-text',
 				socketInfo[socket.id].nickname + ': ' + msg);
 			}
+			
 		});
 
 		socket.on('server-dice', function(data) {
 			if (!isAuthorized(socket.id)) {
-				socket.emit('client-text', 'You are not authorized to send messages');
+				socket.emit('client-text',
+				'You are not authorized to send dice rolls. Please authenticate');
+			} else {
+				console.log('got server-dice from authorized user');
+				if (data == null)
+					return;
+				random.getDice(data, function(err, results) {
+					if (err) {
+						socket.emit('client-text', 'Error rolling dice');
+					} else {
+						send(socket.id, 'client-dice', results);
+					}
+				});
 			}
-			random.getDice(data, function(err, results) {
-				if (err) {
-					socket.emit('client-text', 'Error rolling dice');
-				} else {
-					send(socket.id, 'client-dice', results);
-				}
-			});
 		});
 	});
 };

@@ -102,7 +102,7 @@ function f(value, lower, upper) {
 				callback(err, data);
 			});
 		} else {
-			callback(null, 0);
+			callback(null, []);
 		}
 	};
 }
