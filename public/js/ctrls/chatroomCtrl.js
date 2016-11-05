@@ -43,6 +43,16 @@ function($scope, Messages) {
 		});
 	};
 
+	$scope.resetDice = function() {
+		$scope.dice.boost = undefined;
+		$scope.dice.ability = undefined;
+		$scope.dice.proficiency = undefined;
+		$scope.dice.setback = undefined;
+		$scope.dice.difficulty = undefined;
+		$scope.dice.challenge = undefined
+		$scope.dice.force = undefined;
+	};
+
 	$scope.sendDice = function() {
 		$scope.socket.emit('server-dice', $scope.dice);
 	};

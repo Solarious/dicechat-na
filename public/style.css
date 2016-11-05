@@ -10,3 +10,7 @@ input[type="number"] {
 .overflow-hidden {
 	overflow: hidden;
 }
+
+.reset-button {
+	margin: 15px;
+}
