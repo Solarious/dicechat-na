@@ -45,16 +45,16 @@ diceToMsg: function(diceData) {
 			if (dicename === 'setback' || dicename === 'difficulty' ||
 			dicename === 'challenge') {
 				if (r === 'f') {
-					results.falure += 1;
+					results.failure += 1;
 				} else if (r === 'ff') {
-					results.falure += 2;
+					results.failure += 2;
 				} else if (r === 't') {
 					results.threat += 1;
 				} else if (r === 'tt') {
 					results.threat += 2;
 				} else if (r === 'tf') {
 					results.threat += 1;
-					results.faulre += 1;
+					results.failure += 1;
 				} else if (r === 'd') {
 					results.despair += 1;
 				}
@@ -83,7 +83,7 @@ diceToMsg: function(diceData) {
 	addToMsgDice('challenge', ['blank','f','f','ff','ff','t','t','tf','tf','tt','tt','d']);
 	addToMsgDice('force', ['b','b','b','b','b','b','bb','w','w','ww','ww','ww']);
 
-
+	console.log(results);
 
 	if (results.success > results.failure) {
 		for (var i = 0; i < (results.success - results.failure); i++) {
@@ -91,7 +91,7 @@ diceToMsg: function(diceData) {
 		}
 	}
 	if (results.success < results.failure) {
-		for (var i = 0; i < (results.falure - results.success); i++) {
+		for (var i = 0; i < (results.failure - results.success); i++) {
 			msg.results.push({ src: urlbase + 'failure.png' });
 		}
 	}
@@ -101,7 +101,7 @@ diceToMsg: function(diceData) {
 		}
 	}
 	if (results.advantage < results.threat) {
-		for (var i = 0; i < (results.threat - res.advantage); i++) {
+		for (var i = 0; i < (results.threat - results.advantage); i++) {
 			msg.results.push({ src: urlbase + 'threat.png' });
 		}
 	}
@@ -114,7 +114,7 @@ diceToMsg: function(diceData) {
 	for (var i = 0; i < results.force_white; i++) {
 		msg.results.push({ src: urlbase + 'white.png' });
 	}
-	for (var i = 0; i < results.despair; i++) {
+	for (var i = 0; i < results.force_black; i++) {
 		msg.results.push({ src: urlbase + 'black.png' });
 	}
 
