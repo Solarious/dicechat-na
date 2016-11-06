@@ -53,6 +53,13 @@ function($scope, Messages) {
 		$scope.dice.force = undefined;
 	};
 
+	$scope.incrementDice = function(dicename) {
+		if ($scope.dice[dicename] === undefined)
+			$scope.dice[dicename] = 1;
+		else
+			$scope.dice[dicename]++;
+	};
+
 	$scope.sendDice = function() {
 		$scope.socket.emit('server-dice', $scope.dice);
 	};
@@ -62,5 +69,19 @@ function($scope, Messages) {
 	});
 
 	$scope.msgs = [];
+	$scope.diceNames = [
+		'boost',
+		'ability',
+		'proficiency',
+		'setback',
+		'difficulty',
+		'challenge',
+		'force'
+	];
+	$scope.dice = {};
+	for (var i = 0; i < $scope.diceNames.length; i++) {
+		$scope.dice[$scope.diceNames[i]] = undefined;
+	}
+	console.log($scope.dice);
 	$scope.connect();
 }]);

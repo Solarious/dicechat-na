@@ -7,5 +7,6 @@ angular.module('dicechatApp', [
 	'ChatroomService',
 	'MessageService',
 	'MessageDirective',
+	'DiceDirective',
 	'luegg.directives'
 ]);
