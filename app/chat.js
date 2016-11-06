@@ -24,6 +24,10 @@ module.exports = function(http) {
 		};
 
 		socket.on('disconnect', function() {
+			if (socket.id in socketInfo) {
+				send(socket.id, 'client-text',
+				socketInfo[socket.id].nickname + ' has disconnected');
+			}
 			console.log('a user disconnected');
 		});
 
@@ -50,7 +54,7 @@ module.exports = function(http) {
 							chatroom: data.chatroomName
 						};
 						socket.join(data.chatroomName);
-						socket.emit('client-text', 'Welcome ' + nkn);
+						send(socket.id, 'client-text', nkn + ' has joined');
 					} else {
 						socket.emit('client-text',
 						'Authorization denied: invalid password');

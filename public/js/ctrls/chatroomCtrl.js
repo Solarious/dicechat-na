@@ -3,7 +3,7 @@ app.controller('ChatroomController', ['$scope', 'Messages',
 function($scope, Messages) {
 	$scope.connect = function() {
 		$scope.socket = io();
-		$scope.addMsg('Connected');
+		$scope.addMsg('Connected, please authenticate');
 
 		$scope.socket.on('client-text', function(text) {
 			$scope.addMsg(text);
@@ -11,6 +11,13 @@ function($scope, Messages) {
 
 		$scope.socket.on('client-dice', function(data) {
 			$scope.addDiceMsg(data.results, data.from);
+		});
+
+		$scope.socket.on('disconnect', function() {
+			$scope.addMsg('Disconnected');
+		});
+		$scope.socket.on('reconnect', function() {
+			$scope.addMsg('Reconnected, please authenticate');
 		});
 	};
 
@@ -82,6 +89,5 @@ function($scope, Messages) {
 	for (var i = 0; i < $scope.diceNames.length; i++) {
 		$scope.dice[$scope.diceNames[i]] = undefined;
 	}
-	console.log($scope.dice);
 	$scope.connect();
 }]);
