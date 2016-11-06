@@ -14,3 +14,7 @@ input[type="number"] {
 .reset-button {
 	margin: 15px;
 }
+
+.playerlist {
+	margin-top: 2em;
+}

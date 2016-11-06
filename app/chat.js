@@ -6,6 +6,7 @@ module.exports = function(http) {
 	var io = require('socket.io')(http);
 
 	var socketInfo = {};
+	var roomInfo = {};
 
 	io.on('connection', function(socket) {
 		console.log('a user connected');
@@ -23,11 +24,43 @@ module.exports = function(http) {
 				send(socketId, type, data);
 		};
 
+		var sendRoomInfo = function(roomName) {
+			var info = { players: [] };
+			if (roomInfo[roomName] !== undefined) {
+				for (var i = 0; i < roomInfo[roomName].length; i++) {
+					var id = roomInfo[roomName][i];
+					info.players.push({
+						nickname: socketInfo[id].nickname
+					});
+				}
+			}
+			io.sockets.in(roomName).emit('client-players', info);
+		};
+
+		var addToRoom = function(socket, roomName) {
+			socket.join(roomName);
+			if (roomInfo[roomName] === undefined)
+				roomInfo[roomName] = [];
+			if (roomInfo[roomName].indexOf(socket.id) === -1)
+				roomInfo[roomName].push(socket.id);
+			sendRoomInfo(roomName);
+		};
+
+		var removeFromRoom = function(socket) {
+			if (socket.id in socketInfo) {
+				var roomName = socketInfo[socket.id].chatroom;
+				var index = roomInfo[roomName].indexOf(socket.id);
+				roomInfo[roomName].splice(index, 1);
+				sendRoomInfo(roomName);
+			}
+		}
+
 		socket.on('disconnect', function() {
 			if (socket.id in socketInfo) {
 				send(socket.id, 'client-text',
 				socketInfo[socket.id].nickname + ' has disconnected');
 			}
+			removeFromRoom(socket);
 			console.log('a user disconnected');
 		});
 
@@ -53,7 +86,7 @@ module.exports = function(http) {
 							nickname: nkn,
 							chatroom: data.chatroomName
 						};
-						socket.join(data.chatroomName);
+						addToRoom(socket, data.chatroomName);
 						send(socket.id, 'client-text', nkn + ' has joined');
 					} else {
 						socket.emit('client-text',
@@ -71,7 +104,6 @@ module.exports = function(http) {
 				send(socket.id, 'client-text',
 				socketInfo[socket.id].nickname + ': ' + msg);
 			}
-			
 		});
 
 		socket.on('server-dice', function(data) {

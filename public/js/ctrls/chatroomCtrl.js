@@ -13,6 +13,11 @@ function($scope, Messages) {
 			$scope.addDiceMsg(data.results, data.from);
 		});
 
+		$scope.socket.on('client-players', function(data) {
+			console.log(data);
+			$scope.players = data.players;
+		});
+
 		$scope.socket.on('disconnect', function() {
 			$scope.addMsg('Disconnected');
 		});

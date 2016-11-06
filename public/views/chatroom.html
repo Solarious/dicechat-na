@@ -12,6 +12,15 @@
 		<small class="form-text text-muted">The password for the chatroom (if it has one)</small>
 	</div>
 	<button type="button" class="btn btn-primary" ng-click="auth()">Authenticate</button>
+
+	<ul class="list-group playerlist">
+		<li class="list-group-item">
+			<strong>Connected Players:</strong>
+		</li>
+		<li class="list-group-item" ng-repeat="player in players">
+			{{player.nickname}}
+		</li>
+	</ul>
 </div>
 
 <div class="col-sm-9">
