@@ -1,7 +1,7 @@
 angular.module('MessageService', [])
 .factory('Messages', function() {
 return {
-diceToMsg: function(diceData) {
+diceToMsg: function(diceData, from) {
 	var msg = {
 		dice: [],
 		results: []
@@ -23,7 +23,8 @@ diceToMsg: function(diceData) {
 		for (var i = 0; i < dices.length; i++) {
 			var r = arrayofnames[dices[i]-1];
 			msg.dice.push({
-				src: urlbase + dicename + '_' + r + '.png'
+				src: urlbase + dicename + '_' + r + '.png',
+				alt: dicename + '_' + r
 			});
 			if (dicename === 'boost' || dicename === 'ability' ||
 			dicename === 'proficiency') {
@@ -74,6 +75,7 @@ diceToMsg: function(diceData) {
 	}
 
 	msg.type = 'dice';
+	msg.from = from;
 
 	addToMsgDice('boost', ['blank','blank','s','as','aa','a']);
 	addToMsgDice('ability', ['blank','s','s','ss','a','a','as','aa']);
@@ -87,35 +89,59 @@ diceToMsg: function(diceData) {
 
 	if (results.success > results.failure) {
 		for (var i = 0; i < (results.success - results.failure); i++) {
-			msg.results.push({ src: urlbase + 'success.png' });
+			msg.results.push({
+				src: urlbase + 'success.png',
+				alt: 'success'
+			});
 		}
 	}
 	if (results.success < results.failure) {
 		for (var i = 0; i < (results.failure - results.success); i++) {
-			msg.results.push({ src: urlbase + 'failure.png' });
+			msg.results.push({
+				src: urlbase + 'failure.png',
+				alt: 'failure'
+			});
 		}
 	}
 	if (results.advantage > results.threat) {
 		for (var i = 0; i < (results.advantage - results.threat); i++) {
-			msg.results.push({ src: urlbase + 'advantage.png' });
+			msg.results.push({
+				src: urlbase + 'advantage.png',
+				alt: 'advantage'
+			});
 		}
 	}
 	if (results.advantage < results.threat) {
 		for (var i = 0; i < (results.threat - results.advantage); i++) {
-			msg.results.push({ src: urlbase + 'threat.png' });
+			msg.results.push({
+				src: urlbase + 'threat.png',
+				alt: 'threat'
+			});
 		}
 	}
 	for (var i = 0; i < results.triumph; i++) {
-		msg.results.push({ src: urlbase + 'triumph.png' });
+		msg.results.push({
+			src: urlbase + 'triumph.png',
+			alt: 'triumph'
+		});
 	}
 	for (var i = 0; i < results.despair; i++) {
-		msg.results.push({ src: urlbase + 'despair.png' });
+		msg.results.push({
+			src: urlbase + 'despair.png',
+			alt: 'despair'
+		});
 	}
 	for (var i = 0; i < results.force_white; i++) {
-		msg.results.push({ src: urlbase + 'white.png' });
+		msg.results.push({
+			src: urlbase + 'white.png',
+			alt: 'white force'
+		});
 	}
 	for (var i = 0; i < results.force_black; i++) {
-		msg.results.push({ src: urlbase + 'black.png' });
+		msg.results.push({
+			src: urlbase + 'black.png',
+			alt: 'black force'
+		});
 	}
 
 	return msg;

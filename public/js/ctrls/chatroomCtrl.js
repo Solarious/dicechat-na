@@ -10,7 +10,7 @@ function($scope, Messages) {
 		});
 
 		$scope.socket.on('client-dice', function(data) {
-			$scope.addDiceMsg(data);
+			$scope.addDiceMsg(data.results, data.from);
 		});
 	};
 
@@ -37,9 +37,9 @@ function($scope, Messages) {
 		});
 	};
 
-	$scope.addDiceMsg = function(diceData) {
+	$scope.addDiceMsg = function(diceData, from) {
 		$scope.$evalAsync(function() {
-			$scope.msgs.push(Messages.diceToMsg(diceData));
+			$scope.msgs.push(Messages.diceToMsg(diceData, from));
 		});
 	};
 

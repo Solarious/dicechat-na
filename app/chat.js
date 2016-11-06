@@ -82,7 +82,10 @@ module.exports = function(http) {
 					if (err) {
 						socket.emit('client-text', 'Error rolling dice');
 					} else {
-						send(socket.id, 'client-dice', results);
+						send(socket.id, 'client-dice', {
+							from: socketInfo[socket.id].nickname,
+							results: results
+						});
 					}
 				});
 			}
