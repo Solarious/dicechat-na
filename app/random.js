@@ -82,18 +82,6 @@ function getRandRange(lower, upper, callback) {
 function f(value, lower, upper) {
 	return function(callback) {
 		if (value) {
-			getRandRange(lower, upper, function(err, num) {
-				callback(err, num);
-			});
-		} else {
-			callback(null, 0);
-		}
-	};
-}
-
-function f(value, lower, upper) {
-	return function(callback) {
-		if (value) {
 			async.times(value, function(i, next) {
 				getRandRange(lower, upper, function(err, num) {
 					next(err, num);
